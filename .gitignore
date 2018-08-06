@@ -1,8 +1,11 @@
 .DS_Store
 
-## Build generated
-build/
-DerivedData
+# Build generated
+*.build/*
+build/xcode/
+
+# Submodule changes
+third-party/expat
 
 # Carthage related files
 Carthage/Build
