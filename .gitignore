@@ -7,16 +7,10 @@ build/xcode/
 # Submodule changes
 third-party/expat
 
-# Carthage related files
-Carthage/Build
-
-## Pod related files
-Pods/
-Podfile.lock
-*.xcworkspace
-
 ## Various settings
 *.pbxuser
+*.pbxproj
+*.xcsettings
 !default.pbxuser
 *.mode1v3
 !default.mode1v3
