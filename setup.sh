@@ -16,7 +16,7 @@ GetCurrentDirectory()
 #  Moves Expat into its designated location
 InstallExpat()
 {
-if [ ! "$WORKING_DIR/third-party/expat/.git" ]; then
+if [ -d "$WORKING_DIR/third-party/expat/expat" ]; then
   mv third-party/expat/expat/ third-party/expat2/
   mv third-party/expat/.git third-party/expat2/
   rm -rf third-party/expat/
