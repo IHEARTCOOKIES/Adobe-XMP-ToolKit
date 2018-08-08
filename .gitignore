@@ -3,13 +3,18 @@
 # Build generated
 *.build
 build/xcode/
+cmake*
+*.framework
+*.dSYM
+*.make
+**/build/**/*.pbxproj
+**/build/**/*.plist
 
 # Submodule changes
 third-party/expat
 
-## Various settings
+# Various settings
 *.pbxuser
-*.pbxproj
 *.xcsettings
 !default.pbxuser
 *.mode1v3
