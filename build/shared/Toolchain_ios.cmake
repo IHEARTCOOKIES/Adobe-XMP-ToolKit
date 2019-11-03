@@ -50,8 +50,8 @@ set (CMAKE_CXX_FLAGS "-headerpad_max_install_names -fvisibility=hidden -fvisibil
 
 set (CMAKE_C_LINK_FLAGS "-Wl,-search_paths_first ${CMAKE_C_LINK_FLAGS}")
 set (CMAKE_CXX_LINK_FLAGS "-Wl,-search_paths_first ${CMAKE_CXX_LINK_FLAGS}")
-# Setting Standard C++ complier library as 'libstdc++'
-set (CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++")
+# Setting Standard C++ complier library as 'libc++'
+set (CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
 set (CMAKE_PLATFORM_HAS_INSTALLNAME 1)
 set (CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "-dynamiclib -headerpad_max_install_names")
 set (CMAKE_SHARED_MODULE_CREATE_C_FLAGS "-bundle -headerpad_max_install_names")
@@ -88,7 +88,7 @@ execute_process(
 		  OUTPUT_VARIABLE CMAKE_INSTALLED_XCODE_VERSION
 		  OUTPUT_STRIP_TRAILING_WHITESPACE
 )
-string(REGEX MATCH "Xcode ([3-9].[0-9][.]?[0-9]?)" matches ${CMAKE_INSTALLED_XCODE_VERSION})
+string(REGEX MATCH "Xcode ([1-9][0-9].[0-9][.]?[0-9]?)" matches ${CMAKE_INSTALLED_XCODE_VERSION})
 set(CMAKE_INSTALLED_XCODE_VERSION ${CMAKE_MATCH_1})
 
 # Setup iOS developer location

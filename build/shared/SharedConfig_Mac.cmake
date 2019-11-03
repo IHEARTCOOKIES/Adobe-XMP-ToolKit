@@ -61,8 +61,8 @@ set(COMMON_PLATFORM_BEGIN_WHOLE_ARCHIVE "")
 set(COMMON_PLATFORM_END_WHOLE_ARCHIVE "")
 set(COMMON_DYLIBEXTENSION	"dylib")
 
-# Setting libstdc++ as default library for compilation
-set (CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++")
+# Setting libc++ as default library for compilation
+set (CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
 
 find_program(GCCTOOL gcc HINTS "/usr/bin" "${OSX_DEVELOPER_ROOT}/usr/bin")
 if (${GCCTOOL} STREQUAL "GCCTOOL-NOTFOUND")
