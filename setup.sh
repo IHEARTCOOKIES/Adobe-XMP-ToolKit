@@ -35,7 +35,7 @@ fi
 # Install & unzip cmake if it's not already there
 if [ ! -d "$WORKING_DIR/tools/cmake/bin/CMake.app" ]; then
   cd $WORKING_DIR/tools/cmake/bin
-  curl -O https://cmake.org/files/v3.5/cmake-3.5.2-Darwin-x86_64.tar.gz
+  curl -O https://cmake.org/files/v3.15/cmake-3.15.5-Darwin-x86_64.tar.gz
   tar xf cmake*
   rm cmake*.tar.gz
   mv cmake*/CMake.app .
