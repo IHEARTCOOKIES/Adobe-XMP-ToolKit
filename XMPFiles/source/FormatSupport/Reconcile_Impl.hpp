@@ -2,12 +2,12 @@
 #define __Reconcile_Impl_hpp__ 1
 
 // =================================================================================================
-// ADOBE SYSTEMS INCORPORATED
-// Copyright 2006 Adobe Systems Incorporated
+// Copyright Adobe
+// Copyright 2006 Adobe
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
@@ -22,7 +22,10 @@
 // =================================================================================================
 
 typedef XMP_Uns8 MD5_Digest[16];	// ! Should be in MD5.h.
-
+/* Temporary fix for deprecated warning message, will add proper fix later */
+enum {
+  smSystem_Script                = -1,   /* designates system script.*/
+};
 enum {
 	kDigestMissing = -1,	// A partial import is done, existing XMP is left alone.
 	kDigestDiffers =  0,	// A full import is done, existing XMP is deleted or replaced.

@@ -1,9 +1,9 @@
 // =================================================================================================
-// Copyright 2005 Adobe Systems Incorporated
+// Copyright 2005 Adobe
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #include "public/include/XMP_Environment.h"	// ! Must be the first #include!
@@ -146,7 +146,7 @@ void ExpatAdapter::ParseBuffer ( const void * buffer, size_t length, bool last /
 	
 	#if BanAllEntityUsage
 		if ( this->isAborted ) {
-			XMP_Error error(kXMPErr_BadXML, "DOCTYPE is not allowed" )
+			XMP_Error error(kXMPErr_BadXML, "DOCTYPE is not allowed" );
 			this->NotifyClient ( kXMPErrSev_Recoverable, error );
 		}
 	#endif

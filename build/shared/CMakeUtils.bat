@@ -8,7 +8,7 @@
 
 REM Available Arguments:
 REM [64|32] Bit Architecture (optional, 64 is default)
-REM [2008|2011|2011] VS Version(optional, 2015 is default)
+REM [2008|2011|2011|2015|2017|2019] VS Version(optional, 2022 is default)
 REM [Dynamic | Static] optional, Dynamic by default
 REM [WarningAsError] optional
 REM [Clean] optional
@@ -22,8 +22,8 @@ set CleanCMake=OFF
 set XMPROOT=%buildSharedLoc%/../..
 
 :: Default Generator
-set GeneratorVersion=Visual Studio 14 2015
-set GeneratorArchitecture=Win64
+set GeneratorVersion=Visual Studio 17 2022
+set GeneratorArchitecture=x64
 set CMake_Arch64Bit=ON
 set CMake_ARCH=x64
 
@@ -59,9 +59,9 @@ set CMake_LibTypeFolderName=dynamic
 	)
 
 	:: Visual Studio Version
-	if /I "%1"=="2015" (
-	echo "Generator VS 2015 specified"
-	set GeneratorVersion=Visual Studio 14 2015
+	if /I "%1"=="2022" (
+	echo "Generator VS 2022 specified"
+	set GeneratorVersion=Visual Studio 17 2022
 	set CMakeGenVersion_FolderSuffix=
 	)
 
@@ -94,18 +94,10 @@ set CMake64_Folder_Suffix=
 )
 
 :: CMake Folder specified:
-set CMakeFolder="vc14/%CMake_LibTypeFolderName%/windows%CMake64_Folder_Suffix%"
+set CMakeFolder="vc17/%CMake_LibTypeFolderName%/windows%CMake64_Folder_Suffix%"
 echo CMakeFolder: %CMakeFolder%
 
-:: Create generator type from VS version and architecture
-if "%GeneratorArchitecture%"=="Win32" (
-::32 Bit has no generator argument
-set GENERATOR=%GeneratorVersion%
-) else (
-:: Is ARM or Win64
-set GENERATOR=%GeneratorVersion% %GeneratorArchitecture%
-)
-echo Generator used: %GENERATOR%
+echo Generator used: %GeneratorVersion%
 
 :: Delete old cmake folder on "clean"
 if "%CleanCMake%"=="ON" (
@@ -115,8 +107,8 @@ if exist %CMakeFolder% rmdir /S /Q %CMakeFolder%
 
 mkdir %CMakeFolder%
 cd %CMakeFolder%
-echo cmake ../../../. -G"%GENERATOR%" -DXMP_CMAKEFOLDER_NAME="%CMakeFolder%" -DCMAKE_CL_64=%CMake_Arch64Bit% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_WARNING_AS_ERROR=%CMake_Build_Warning_As_Error% -DXMP_BUILD_STATIC="%CMake_BuildStatic%" 
-cmake ../../../. -G"%GENERATOR%" -DXMP_CMAKEFOLDER_NAME="%CMakeFolder%" -DCMAKE_CL_64=%CMake_Arch64Bit% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_WARNING_AS_ERROR=%CMake_Build_Warning_As_Error% -DXMP_BUILD_STATIC="%CMake_BuildStatic%" 
+echo cmake ../../../. -G"%GeneratorVersion%" -A %GeneratorArchitecture% -DXMP_CMAKEFOLDER_NAME="%CMakeFolder%" -DCMAKE_CL_64=%CMake_Arch64Bit% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_WARNING_AS_ERROR=%CMake_Build_Warning_As_Error% -DXMP_BUILD_STATIC="%CMake_BuildStatic%" 
+cmake ../../../. -G"%GeneratorVersion%" -A %GeneratorArchitecture% -DXMP_CMAKEFOLDER_NAME="%CMakeFolder%" -DCMAKE_CL_64=%CMake_Arch64Bit% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_WARNING_AS_ERROR=%CMake_Build_Warning_As_Error% -DXMP_BUILD_STATIC="%CMake_BuildStatic%" 
 
 if errorlevel 1 goto error
 goto ok

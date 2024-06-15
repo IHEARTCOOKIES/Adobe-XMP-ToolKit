@@ -1,10 +1,10 @@
 // =================================================================================================
-// ADOBE SYSTEMS INCORPORATED
-// Copyright 2011 Adobe Systems Incorporated
+// Copyright Adobe
+// Copyright 2011 Adobe
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #ifndef MODULEUTILS_H
@@ -19,7 +19,14 @@ typedef HMODULE OS_ModuleRef;
 #include <memory>
 typedef CFBundleRef OS_ModuleRef;
 #elif XMP_UNIXBuild
+# if __clang__
+#include <memory>
+#else
 #include <tr1/memory>
+#endif
+typedef void* OS_ModuleRef;
+#elif XMP_AndroidBuild
+#include <memory>
 typedef void* OS_ModuleRef;
 #else
 #error	Unsupported operating system

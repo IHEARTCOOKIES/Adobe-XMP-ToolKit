@@ -1,10 +1,10 @@
 // =================================================================================================
-// ADOBE SYSTEMS INCORPORATED
-// Copyright 2011 Adobe Systems Incorporated
+// Copyright Adobe
+// Copyright 2011 Adobe
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #ifndef PLUGINREGISTRY_H
@@ -68,14 +68,7 @@ public:
 	
 private:
 
-	struct StringCompare : std::binary_function< const std::string &, const std::string &, bool >
-	{
-		bool operator()( const std::string & a, const std::string & b ) const
-		{
-			return ( a.compare(b) < 0 );
-		}
-	};
-	typedef std::map<std::string, const PluginCreatorBase*,	StringCompare>		RegistryEntryMap;
+	typedef std::map<std::string, const PluginCreatorBase*> RegistryEntryMap;
 	
 	PluginRegistry(){}
 	~PluginRegistry();

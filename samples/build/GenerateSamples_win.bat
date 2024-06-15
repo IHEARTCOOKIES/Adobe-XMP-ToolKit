@@ -19,25 +19,18 @@ exit /B 0)
 :Start
 ECHO Enter your choice:
 ECHO 1. Clean
-ECHO 2. VC2015, 32 Bit Project (Static)
-ECHO 3. VC2015, 32 Bit Project (Dynamic)
-ECHO 4. VC2015, 64 Bit Project (Static)
-ECHO 5. VC2015, 64 Bit Project (Dynamic)
-ECHO 6. Build All (Static)
-ECHO 7. Build All (Dynamic) 
-ECHO 8. Close
+ECHO 2. VC2022, 64 Bit Project (Static)
+ECHO 3. VC2022, 64 Bit Project (Dynamic)
+ECHO 4. Close
 
 ECHO
 set /P choice=Enter your choice:
 
 IF "%choice%"=="1" GOTO CleanCMake
-IF "%choice%"=="2" GOTO 32VC2015
-IF "%choice%"=="3" GOTO 32VC2015
-IF "%choice%"=="4" GOTO 64VC2015
-IF "%choice%"=="5" GOTO 64VC2015
-IF "%choice%"=="6" GOTO 32VC2015
-IF "%choice%"=="7" GOTO 32VC2015
-IF "%choice%"=="8" GOTO Close
+IF "%choice%"=="2" GOTO 64VC2022
+IF "%choice%"=="3" GOTO 64VC2022
+IF "%choice%"=="4" GOTO Close
+
 
 ECHO Invalid Choice, Exiting
 
@@ -87,7 +80,7 @@ if exist cmake\ModifyingXMPHistory\build_x64 rmdir /S /Q cmake\ModifyingXMPHisto
 if exist cmake\ModifyingXMPHistory\build rmdir /S /Q cmake\ModifyingXMPHistory\build
 
 
-if exist vc14 rmdir /S /Q vc14
+if exist vc17 rmdir /S /Q vc17
 if exist ..\target\windows rmdir /S /Q ..\target\windows
 if exist ..\target\windows_x64 rmdir /S /Q ..\target\windows_x64
 
@@ -96,22 +89,12 @@ echo.
 echo. 
 GOTO Start
 
-:32VC2015
-set GENERATOR=Visual Studio 14
-set DIR=vc14\windows
-set bit64=0
+:64VC2022
+set GENERATOR=Visual Studio 17 2022
+set DIR=vc17\windows_x64
+set bit64=1
 IF "%choice%"=="2" set static=1
 IF "%choice%"=="3" set static=0
-IF "%choice%"=="6" set static=1
-IF "%choice%"=="7" set static=0
-GOTO GenerateNow
-
-:64VC2015
-set GENERATOR=Visual Studio 14 Win64
-set DIR=vc14\windows_x64
-set bit64=1
-IF "%choice%"=="4" set static=1
-IF "%choice%"=="5" set static=0
 GOTO GenerateNow
 
 
@@ -121,15 +104,10 @@ IF NOT exist %DIR% mkdir %DIR%
 cd %DIR%
 if errorlevel 1 ( ECHO Cannot create folder %DIR% for generating project
 goto error)
-ECHO "%CMAKE%"  ..\..\cmake\ -G"%GENERATOR%" -DCMAKE_CL_64=%bit64% -DSTATIC=%static%
+ECHO "%CMAKE%"  ..\..\cmake\ -G"%GENERATOR%" -A x64 -DCMAKE_CL_64=%bit64% -DSTATIC=%static%
 "%CMAKE%"  ..\..\cmake\ -G"%GENERATOR%" -DCMAKE_CL_64=%bit64% -DSTATIC=%static%
 if errorlevel 1 ( cd ..\..\
 goto error)
-IF "%choice%"=="6" ( set choice="0"
-static=1
-cd ..\..\
-goto 64VC2015
-)
 goto ok
 
 

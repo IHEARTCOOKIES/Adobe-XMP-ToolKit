@@ -9,7 +9,12 @@
 
 # ==============================================================================
 # define minimum cmake version
-cmake_minimum_required(VERSION 3.5.2)
+# For Android always build with make 3.6
+if(ANDROID)
+	cmake_minimum_required(VERSION 3.5.2)
+else(ANDROID)
+	cmake_minimum_required(VERSION 3.15.5)
+endif(ANDROID)
 
 # ==============================================================================
 # Shared config for mac
@@ -48,7 +53,7 @@ set(CMAKE_C_FLAGS "${COMMON_SHARED_COMPILE_FLAGS} ${COMMON_EXTRA_C_COMPILE_FLAGS
 set(CMAKE_C_FLAGS_DEBUG "${COMMON_SHARED_COMPILE_DEBUG_FLAGS}")
 set(CMAKE_C_FLAGS_RELEASE "${COMMON_SHARED_COMPILE_RELEASE_FLAGS}")
 
-set(COMMON_SHARED_CXX_COMPILE_FLAGS "${${COMPONENT}_SHARED_CXX_COMPILE_FLAGS} -std=c++11 -Wnon-virtual-dtor -Woverloaded-virtual -Wno-unused-variable -Wno-unused-function -Wno-unused-parameter")
+set(COMMON_SHARED_CXX_COMPILE_FLAGS "${${COMPONENT}_SHARED_CXX_COMPILE_FLAGS} -std=c++17 -Wnon-virtual-dtor -Woverloaded-virtual -Wno-unused-variable -Wno-unused-function -Wno-unused-parameter")
 set(CMAKE_CXX_FLAGS "-funsigned-char -fshort-enums -fno-common ${COMMON_SHARED_CXX_COMPILE_FLAGS} ${COMMON_EXTRA_CXX_COMPILE_FLAGS}")
 set(CMAKE_CXX_FLAGS_DEBUG "${COMMON_SHARED_COMPILE_DEBUG_FLAGS}")
 set(CMAKE_CXX_FLAGS_RELEASE "${COMMON_SHARED_COMPILE_RELEASE_FLAGS}")
@@ -61,8 +66,12 @@ set(COMMON_PLATFORM_BEGIN_WHOLE_ARCHIVE "")
 set(COMMON_PLATFORM_END_WHOLE_ARCHIVE "")
 set(COMMON_DYLIBEXTENSION	"dylib")
 
-# Setting libc++ as default library for compilation
-set (CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+# Setting libstdc++ as default library for compilation
+if(CMAKE_LIBCPP)
+	set (CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+else(CMAKE_LIBCPP)
+	set (CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++")
+endif(CMAKE_LIBCPP)
 
 find_program(GCCTOOL gcc HINTS "/usr/bin" "${OSX_DEVELOPER_ROOT}/usr/bin")
 if (${GCCTOOL} STREQUAL "GCCTOOL-NOTFOUND")
@@ -218,6 +227,7 @@ function(SetPlatformLinkFlags target linkflags libname)
 	set_target_properties(${target} PROPERTIES XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS "YES")
 	set_target_properties(${target} PROPERTIES XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT "dwarf-with-dsym")
 	set_target_properties(${target} PROPERTIES XCODE_ATTRIBUTE_GCC_ENABLE_PASCAL_STRINGS "NO")
+	set_target_properties(${target} PROPERTIES XCODE_ATTRIBUTE_GCC_WARN_SHADOW "YES")	
 
 	# HACK: remove warnings that (CMake 2.8.10) sets by default: -Wmost -Wno-four-char-constants -Wno-unknown-pragmas
 	set_target_properties(${target} PROPERTIES XCODE_ATTRIBUTE_WARNING_CFLAGS "")
